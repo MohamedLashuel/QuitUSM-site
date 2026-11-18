@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+title: Blog
+description: Stories, research, and reflections from the QuitUSM community.
+scripts: [blog]
+---
+<div class="container blog">
+  <h1 class="page-title">Blog</h1>
+
+  <div class="search" data-blog-search hidden>
+    <label class="visually-hidden" for="blog-search-input">Search articles</label>
+    <span class="material-symbols-outlined search__icon" aria-hidden="true">search</span>
+    <input class="search__input" id="blog-search-input" type="search" placeholder="Search articles" autocomplete="off">
+  </div>
+
+  <p class="visually-hidden" role="status" data-blog-status></p>
+
+  <ul class="post-grid" role="list" data-blog-list>
+    {% for post in collections.posts %}
+    <li class="post-card card" data-search-text="{{ post.data.title | lower }} {{ post.data.description | lower }}">
+      <img class="post-card__image" src="{{ post.data.image }}" alt="" loading="lazy" width="640" height="360">
+      <div class="post-card__body">
+        <h2 class="post-card__title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+        <p class="post-card__description">{{ post.data.description }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <p class="blog__empty" data-blog-empty hidden>No articles match your search.</p>
+
+  <div class="blog__more">
+    <button class="button" type="button" data-blog-more hidden>Load more</button>
+  </div>
+</div>

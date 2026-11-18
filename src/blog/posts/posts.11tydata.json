@@ -1,0 +1,6 @@
+{
+  "layout": "layouts/article.njk",
+  "permalink": "/blog/{{ page.fileSlug }}/",
+  "showDate": true,
+  "image": "/images/blog/placeholder.svg"
+}

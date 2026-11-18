@@ -1,0 +1,28 @@
+<header class="site-header">
+  <nav class="nav container" aria-label="Main">
+    <a class="nav__brand" href="/">{{ site.name }}</a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+
+    <ul class="nav__menu" id="nav-menu">
+      <li><a class="nav__link" href="/" {% if page.url == "/" %}aria-current="page"{% endif %}>Home</a></li>
+      <li><span class="nav__link nav__link--disabled">About</span></li>
+      <li><span class="nav__link nav__link--disabled">The QuitUSM Book</span></li>
+      <li class="nav__dropdown">
+        <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="guides-menu">
+          Guides
+          <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </button>
+        <ul class="nav__submenu" id="guides-menu">
+          {% for guide in collections.guides %}
+          <li><a class="nav__sublink" href="{{ guide.url }}" {% if page.url == guide.url %}aria-current="page"{% endif %}>{{ guide.data.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li><a class="nav__link" href="/blog/" {% if "/blog/" in page.url %}aria-current="page"{% endif %}>Blog</a></li>
+    </ul>
+  </nav>
+</header>

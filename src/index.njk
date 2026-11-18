@@ -1,0 +1,52 @@
+---
+layout: layouts/base.njk
+description: QuitUSM is a movement to reclaim our life from screens.
+ctas:
+  - title: Read the Book
+    description: The QuitUSM Book lays out why compulsive screen use takes hold, and a practical path to letting it go.
+    icon: menu_book
+    label: Coming soon
+  - title: Follow a Guide
+    description: Step-by-step guides for cutting back on social media, video, and endless scrolling, at your own pace.
+    icon: explore
+    label: Browse guides
+    href: /guides/getting-started/
+  - title: Read the Blog
+    description: Stories, research, and reflections from people who have stepped back from their screens.
+    icon: article
+    label: Visit the blog
+    href: /blog/
+---
+<section class="hero">
+  <img class="hero__image" src="/images/home_banner.jpg" alt="" width="2090" height="1011">
+  <div class="hero__text container">
+    <h1 class="hero__title">{{ site.name }}</h1>
+    <p class="hero__tagline">{{ site.tagline }}</p>
+  </div>
+</section>
+
+<div class="container home">
+  <p class="home__intro">
+    Our screens were meant to serve us, yet many of us now spend our best hours scrolling,
+    swiping, and refreshing. QuitUSM is a community of people choosing to take that time back.
+    We share honest guides, research, and stories to help you build a life where technology
+    is a tool you pick up on purpose, not a habit that picks you up.
+  </p>
+
+  <ul class="cta-list" role="list">
+    {% for cta in ctas %}
+    <li class="cta card">
+      <div class="cta__body">
+        <h2 class="cta__title">{{ cta.title }}</h2>
+        <p class="cta__description">{{ cta.description }}</p>
+      </div>
+      <span class="material-symbols-outlined cta__icon" aria-hidden="true">{{ cta.icon }}</span>
+      {% if cta.href %}
+      <a class="button cta__button" href="{{ cta.href }}">{{ cta.label }}</a>
+      {% else %}
+      <span class="button button--disabled cta__button" aria-disabled="true">{{ cta.label }}</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
