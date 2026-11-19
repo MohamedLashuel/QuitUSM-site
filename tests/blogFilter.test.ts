@@ -1,7 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countMatches, hasMore, matchesQuery, statusMessage, visibility } from "../src/scripts/lib/blogFilter";
-
-const texts = ["why we started", "boredom is good", "reading again", "phone-free bedroom"];
+import { matchesQuery, planView, statusMessage } from "../src/scripts/lib/blogFilter";
 
 describe("matchesQuery", () => {
   it("matches everything for an empty query", () => {
@@ -16,24 +14,26 @@ describe("matchesQuery", () => {
   });
 });
 
-describe("visibility", () => {
-  it("limits visible items", () => {
-    expect(visibility(texts, "", 2)).toEqual([true, true, false, false]);
+const titles = ["why we started", "boredom is good", "reading again", "phone-free bedroom"];
+const plan = (query: string, limit: number) => planView(titles, (title) => title, query, limit);
+
+describe("planView", () => {
+  it("shows the first `limit` items for an empty query", () => {
+    expect(plan("", 2)).toEqual({ visible: ["why we started", "boredom is good"], matchCount: 4, hasMore: true });
   });
   it("applies the limit to matches only", () => {
-    expect(visibility(texts, "e", 2)).toEqual([true, true, false, false]);
-    expect(visibility(texts, "ing", 6)).toEqual([false, false, true, false]);
+    expect(plan("e", 2).visible).toEqual(["why we started", "boredom is good"]);
+    expect(plan("ing", 6)).toEqual({ visible: ["reading again"], matchCount: 1, hasMore: false });
+  });
+  it("reports no more items when matches exactly fill the limit", () => {
+    expect(plan("", 4).hasMore).toBe(false);
+  });
+  it("returns no items when nothing matches", () => {
+    expect(plan("zzz", 6)).toEqual({ visible: [], matchCount: 0, hasMore: false });
   });
 });
 
-describe("counts and status", () => {
-  it("counts matches", () => {
-    expect(countMatches(texts, "o")).toBe(2);
-  });
-  it("reports whether more items remain", () => {
-    expect(hasMore(7, 6)).toBe(true);
-    expect(hasMore(6, 6)).toBe(false);
-  });
+describe("statusMessage", () => {
   it("builds status messages", () => {
     expect(statusMessage(0, 0)).toBe("No articles found");
     expect(statusMessage(1, 1)).toBe("Showing 1 of 1 article");

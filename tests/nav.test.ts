@@ -1,51 +1,61 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { initNav } from "../src/scripts/main";
+import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 const html = `
-  <nav class="nav">
-    <button class="nav__toggle" aria-expanded="false"></button>
-    <ul>
-      <li class="nav__dropdown">
-        <button class="nav__dropdown-toggle" aria-expanded="false"></button>
-        <ul><li><a href="#">Guide</a></li></ul>
-      </li>
-    </ul>
+  <nav>
+    <details id="menu" data-dismissible>
+      <summary>Menu</summary>
+      <details id="guides" class="nav__dropdown" data-dismissible>
+        <summary>Guides</summary>
+        <a href="#">Guide</a>
+      </details>
+    </details>
   </nav>
   <p id="outside">outside</p>`;
 
-const get = (selector: string) => document.querySelector<HTMLElement>(selector)!;
-const expanded = (selector: string) => get(selector).getAttribute("aria-expanded");
+const get = <T extends HTMLElement = HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
+const details = (id: string) => get<HTMLDetailsElement>(`#${id}`);
+const pressEscape = (target: HTMLElement) =>
+  target.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
 
 describe("navigation", () => {
-  beforeEach(() => {
+  // Like the browser: the page exists first, then the script initializes itself once on import.
+  beforeAll(async () => {
     document.body.innerHTML = html;
-    initNav(document);
+    await import("../src/scripts/nav");
   });
 
-  it("toggles the mobile menu", () => {
-    get(".nav__toggle").click();
-    expect(expanded(".nav__toggle")).toBe("true");
-    get(".nav__toggle").click();
-    expect(expanded(".nav__toggle")).toBe("false");
+  beforeEach(() => {
+    details("menu").open = true;
+    details("guides").open = true;
   });
 
-  it("toggles the guides submenu on click", () => {
-    get(".nav__dropdown-toggle").click();
-    expect(expanded(".nav__dropdown-toggle")).toBe("true");
+  it("closes only the innermost menu on Escape and returns focus to its toggle", () => {
+    pressEscape(get("#guides a"));
+    expect(details("guides").open).toBe(false);
+    expect(details("menu").open).toBe(true);
+    expect(document.activeElement).toBe(get("#guides > summary"));
   });
 
-  it("closes the submenu on Escape and returns focus", () => {
-    get(".nav__dropdown-toggle").click();
-    get(".nav__dropdown a").dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-    expect(expanded(".nav__dropdown-toggle")).toBe("false");
-    expect(document.activeElement).toBe(get(".nav__dropdown-toggle"));
+  it("closes the outer menu on a second Escape", () => {
+    pressEscape(get("#guides a"));
+    pressEscape(get("#guides > summary"));
+    expect(details("menu").open).toBe(false);
+    expect(document.activeElement).toBe(get("#menu > summary"));
   });
 
   it("closes menus when clicking outside", () => {
-    get(".nav__toggle").click();
-    get(".nav__dropdown-toggle").click();
     get("#outside").click();
-    expect(expanded(".nav__toggle")).toBe("false");
-    expect(expanded(".nav__dropdown-toggle")).toBe("false");
+    expect(details("menu").open).toBe(false);
+    expect(details("guides").open).toBe(false);
+  });
+
+  it("keeps menus open when clicking inside them", () => {
+    get("#guides a").click();
+    expect(details("guides").open).toBe(true);
+  });
+
+  it("closes the dropdown when the pointer leaves it", () => {
+    details("guides").dispatchEvent(new MouseEvent("mouseleave"));
+    expect(details("guides").open).toBe(false);
   });
 });

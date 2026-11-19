@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "isolatedModules": true
   },
-  "include": ["eleventy.config.ts", "src/**/*.ts", "tests/**/*.ts"]
+  "include": ["eleventy.config.ts", "vitest.config.ts", "src/**/*.ts", "tests/**/*.ts"]
 }

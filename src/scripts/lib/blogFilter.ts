@@ -1,5 +1,8 @@
 export const PAGE_SIZE = 6;
 
+/** What the blog list should currently show. */
+export type BlogView<T> = { visible: T[]; matchCount: number; hasMore: boolean };
+
 export const normalize = (text: string): string => text.trim().toLowerCase();
 
 export const matchesQuery = (searchText: string, query: string): boolean =>
@@ -7,20 +10,20 @@ export const matchesQuery = (searchText: string, query: string): boolean =>
     .split(/\s+/)
     .every((term) => normalize(searchText).includes(term));
 
-/** Returns, for each item, whether it should be visible. */
-export const visibility = (searchTexts: string[], query: string, limit: number): boolean[] => {
-  let shown = 0;
-  return searchTexts.map((text) => {
-    const visible = matchesQuery(text, query) && shown < limit;
-    if (visible) shown += 1;
-    return visible;
-  });
+/** Decides which items to show for a search query and a page limit. */
+export const planView = <T>(
+  items: T[],
+  getText: (item: T) => string,
+  query: string,
+  limit: number,
+): BlogView<T> => {
+  const matches = items.filter((item) => matchesQuery(getText(item), query));
+  return {
+    visible: matches.slice(0, limit),
+    matchCount: matches.length,
+    hasMore: matches.length > limit,
+  };
 };
-
-export const countMatches = (searchTexts: string[], query: string): number =>
-  searchTexts.filter((text) => matchesQuery(text, query)).length;
-
-export const hasMore = (matchCount: number, limit: number): boolean => matchCount > limit;
 
 export const statusMessage = (shownCount: number, matchCount: number): string =>
   matchCount === 0

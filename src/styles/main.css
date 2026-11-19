@@ -2,20 +2,25 @@
    Design tokens
    ========================================================================== */
 :root {
-  /* Color (grayscale first draft — swap hue/chroma later) */
-  --color-primary: oklch(0.35 0 0);
-  --color-primary-hover: oklch(0.27 0 0);
-  --color-primary-dark: oklch(0.2 0 0);
-  --color-primary-light: oklch(0.96 0 0);
-  --color-on-primary: oklch(0.98 0 0);
-  --color-on-primary-muted: oklch(0.78 0 0);
-  --color-text: oklch(0.21 0 0);
-  --color-text-muted: oklch(0.45 0 0);
+  /* Color: all derived from the primary's hue (257). The primary is the lightest blue
+     that keeps white text at WCAG AA contrast (4.5:1). */
+  --color-primary: oklch(0.55 0.191 257);
+  --color-primary-hover: oklch(0.47 0.16 257);
+  --color-primary-dark: oklch(0.28 0.08 257);
+  --color-primary-light: oklch(0.96 0.018 257);
+  --color-neutral-light: oklch(0.96 0 0);
+  --color-on-primary: var(--color-on-dark);
+  --color-on-primary-muted: oklch(0.84 0.05 257);
+  --color-on-dark: oklch(0.98 0.008 257);
+  --color-on-dark-muted: oklch(0.8 0.04 257);
+  --color-text: oklch(0.22 0.03 257);
+  --color-text-muted: oklch(0.47 0.03 257);
   --color-background: oklch(1 0 0);
-  --color-border: oklch(0.86 0 0);
-  --color-disabled: oklch(0.6 0 0);
-  --color-focus: oklch(0.55 0 0);
-  --color-overlay: oklch(0 0 0 / 0.6);
+  --color-border: oklch(0.88 0.03 257);
+  --color-disabled: oklch(0.88 0.02 257);
+  --color-focus: var(--color-primary);
+  --color-overlay: oklch(0.2 0.05 257 / 0.6);
+  --color-shadow: oklch(0.2 0.05 257 / 0.2);
 
   /* Spacing */
   --space-4: 4px;
@@ -71,6 +76,11 @@
   box-sizing: border-box;
 }
 
+/* Component display rules (e.g. .button's inline-flex) would otherwise override the hidden attribute. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -108,9 +118,22 @@ a {
   outline-offset: 2px;
 }
 
-.material-symbols-outlined {
+/* Sized by font-size (1em square) and colored by currentColor; see the `icon` shortcode. */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
   font-size: var(--font-size-24);
-  line-height: 1;
+  background-color: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+@media (forced-colors: active) {
+  .icon {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
 }
 
 .container {
@@ -181,6 +204,7 @@ a {
 
 .button--disabled,
 .button--disabled:hover {
+  color: var(--color-text-muted);
   background: var(--color-disabled);
   cursor: not-allowed;
 }
@@ -198,6 +222,7 @@ a {
   z-index: 10;
   background: var(--color-primary);
   color: var(--color-on-primary);
+  --color-focus: var(--color-on-primary);
 }
 
 .nav {
@@ -214,12 +239,17 @@ a {
   text-decoration: none;
 }
 
+.nav summary {
+  list-style: none;
+}
+
+.nav summary::-webkit-details-marker {
+  display: none;
+}
+
 .nav__toggle {
   display: inline-flex;
   padding: var(--space-8);
-  color: inherit;
-  background: none;
-  border: none;
   border-radius: var(--radius);
   cursor: pointer;
 }
@@ -231,17 +261,15 @@ a {
   list-style: none;
 }
 
+/* Mobile: the open menu drops down below the header, over the page. */
 .nav__menu {
-  width: 100%;
-  padding-bottom: var(--space-16);
-}
-
-.js .nav__menu {
-  display: none;
-}
-
-.js .nav__toggle[aria-expanded="true"] + .nav__menu {
-  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0 var(--gutter) var(--space-16);
+  background: var(--color-primary);
+  box-shadow: 0 var(--space-8) var(--space-24) var(--color-shadow);
 }
 
 .nav__link,
@@ -253,10 +281,7 @@ a {
   padding: var(--space-12) var(--space-16);
   font: inherit;
   color: inherit;
-  text-align: left;
   text-decoration: none;
-  background: none;
-  border: none;
   border-radius: var(--radius);
   cursor: pointer;
 }
@@ -279,21 +304,8 @@ a {
   cursor: default;
 }
 
-.nav__dropdown-toggle .material-symbols-outlined {
-  transition: transform 150ms ease;
-}
-
-.nav__dropdown-toggle[aria-expanded="true"] .material-symbols-outlined {
-  transform: rotate(180deg);
-}
-
 .nav__submenu {
-  display: none;
   padding-left: var(--space-16);
-}
-
-.nav__dropdown-toggle[aria-expanded="true"] + .nav__submenu {
-  display: block;
 }
 
 @media (min-width: 768px) {
@@ -305,12 +317,21 @@ a {
     display: none;
   }
 
-  .nav__menu,
-  .js .nav__menu {
+  /* The menu is always shown on desktop, whether or not its <details> is open. */
+  .nav__collapsible::details-content,
+  .nav__dropdown:hover::details-content,
+  .nav__dropdown:focus-within::details-content {
+    display: block;
+    content-visibility: visible;
+  }
+
+  .nav__menu {
+    position: static;
     display: flex;
     gap: var(--space-8);
-    width: auto;
     padding: 0;
+    background: none;
+    box-shadow: none;
   }
 
   .nav__link {
@@ -324,17 +345,14 @@ a {
   .nav__submenu {
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0;
+    width: max-content;
     min-width: var(--space-256);
+    max-width: var(--space-384);
     padding: var(--space-8);
     background: var(--color-primary);
     border-radius: 0 0 var(--radius) var(--radius);
-    box-shadow: 0 var(--space-8) var(--space-24) oklch(0 0 0 / 0.2);
-  }
-
-  .nav__dropdown:hover .nav__submenu,
-  .nav__dropdown:focus-within .nav__submenu {
-    display: block;
+    box-shadow: 0 var(--space-8) var(--space-24) var(--color-shadow);
   }
 }
 
@@ -345,13 +363,16 @@ a {
   margin-top: var(--space-96);
   padding-block: var(--space-48);
   background: var(--color-primary-dark);
-  color: var(--color-on-primary);
+  color: var(--color-on-dark);
+  --color-focus: var(--color-on-dark);
 }
 
 .footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas:
+    "links"
+    "contact"
+    "legal";
   gap: var(--space-32);
 }
 
@@ -360,11 +381,12 @@ a {
 }
 
 .footer__links {
+  grid-area: links;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-24);
-  margin-bottom: var(--space-16);
+  font-size: var(--font-size-14);
 }
 
 .footer__icon-link {
@@ -374,21 +396,39 @@ a {
 }
 
 .footer__icon {
-  width: var(--space-32);
-  height: var(--space-32);
+  font-size: var(--space-32);
 }
 
 .footer__legal {
+  grid-area: legal;
   font-size: var(--font-size-14);
-  color: var(--color-on-primary-muted);
+  color: var(--color-on-dark-muted);
 }
 
 .footer__contact {
-  text-align: right;
+  grid-area: contact;
 }
 
 .footer__heading {
   font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "links contact"
+      "legal contact";
+    gap: var(--space-16) var(--space-32);
+  }
+
+  .footer__links {
+    font-size: var(--font-size-16);
+  }
+
+  .footer__contact {
+    justify-self: end;
+  }
 }
 
 /* ==========================================================================
@@ -417,7 +457,7 @@ a {
   bottom: 0;
   z-index: 1;
   padding-bottom: var(--space-32);
-  color: var(--color-on-primary);
+  color: var(--color-on-dark);
 }
 
 .hero__title {
@@ -529,10 +569,6 @@ a {
   margin-bottom: var(--space-48);
 }
 
-.search[hidden] {
-  display: none;
-}
-
 .search__icon {
   position: absolute;
   top: 50%;
@@ -563,10 +599,7 @@ a {
 .post-card {
   position: relative;
   overflow: hidden;
-}
-
-.post-card[hidden] {
-  display: none;
+  background: var(--color-neutral-light);
 }
 
 .post-card:focus-within {
