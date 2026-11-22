@@ -33,6 +33,7 @@
   --space-64: 64px;
   --space-96: 96px;
   --space-128: 128px;
+  --space-192: 192px;
   --space-256: 256px;
   --space-384: 384px;
   --space-512: 512px;
@@ -442,6 +443,7 @@ a {
   width: 100%;
   height: var(--space-384);
   object-fit: cover;
+  object-position: -var(--space-384) 0px;
 }
 
 .hero::after {
@@ -473,8 +475,9 @@ a {
 
 .home__intro {
   max-width: var(--container-narrow);
-  margin: var(--space-64) 0;
+  margin: var(--space-48) auto;
   font-size: var(--font-size-18);
+  text-align: justify;
 }
 
 .cta-list {
@@ -491,7 +494,7 @@ a {
     "icon"
     "body"
     "button";
-  justify-items: start;
+  justify-items: center;
   gap: var(--space-16);
   padding: var(--space-32);
 }
@@ -507,7 +510,8 @@ a {
 
 .cta__description {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-text);
+  font-size: var(--font-size-16);
 }
 
 .cta__icon {
@@ -517,11 +521,14 @@ a {
 
 .cta__button {
   grid-area: button;
+  justify-self: center;
+  width: var(--space-192);
 }
 
 @media (min-width: 768px) {
   .hero__image {
-    height: var(--space-512);
+    height: var(--space-384);
+    object-position: 0px 0px;
   }
 
   .hero__text {
@@ -537,17 +544,14 @@ a {
   }
 
   .cta {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 5fr 2fr;
     grid-template-areas:
       "body icon"
       "body button";
     align-items: center;
+    justify-items: start;
     column-gap: var(--space-48);
-    padding: var(--space-48);
-  }
-
-  .cta__title {
-    font-size: var(--font-size-36);
+    margin: var(--space-24) var(--space-48);
   }
 
   .cta__icon {
@@ -691,10 +695,11 @@ a {
 
 .prose {
   font-size: var(--font-size-18);
+  line-height: 2;
 }
 
 .prose h2 {
-  margin: var(--space-48) 0 var(--space-16);
+  margin-bottom: var(--space-16);
   font-size: var(--font-size-30);
 }
 
