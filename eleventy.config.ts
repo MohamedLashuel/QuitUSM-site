@@ -1,5 +1,6 @@
 import { build } from "esbuild";
 import { renderApp, validateApp } from "./src/shortcodes/app";
+import { HtmlBasePlugin } from "@11ty/eleventy";
 
 type CollectionItem = { data: Record<string, unknown>; date: Date };
 
@@ -61,6 +62,8 @@ export default function (eleventyConfig: any) {
   eleventyConfig.addFilter("readableDate", (date: Date) =>
     date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }),
   );
+
+  eleventyConfig.addPlugin(HtmlBasePlugin);
 
   return {
     dir: { input: "src", includes: "_includes", data: "_data", output: OUTPUT_DIR },
