@@ -1,0 +1,20 @@
+# Useful Software {#AP-soft}
+
+I've created a browser extension called BlockUSM to serve as a website blocker that can also remove only certain elements from social media sites (e.g. feeds or shorts/reels) and prevent websites from appearing in search results. It's available for [Chrome](https://chromewebstore.google.com/detail/blockusm/kigdabiljcicjjkgddoacmogbmfedkhg) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/blockusm-stop-doomscrolling/) (including Firefox for Android). Other apps or extensions provide these functionalities, but BlockUSM combines them into one easy-to-use extension. I've given other useful software below. All are free unless specified otherwise.
+
+**Browser Extensions**
+
+- [LeechBlock NG](https://www.proginosko.com/leechblock/): A fully-featured website blocker available for most browsers.
+- [ivBlock](https://apps.apple.com/us/app/ivblock-website-blocker/id6749312487): Port of LeechBlock NG for Safari
+- uBlacklist for [Chrome](https://chromewebstore.google.com/detail/ublacklist/pncfbmialoiaghdehhbnbhkkgmjanfhe), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/ublacklist/), [Safari](https://apps.apple.com/us/app/ublacklist-for-safari/id1547912640): Blocks websites from appearing in search results
+- [SocialFocus](https://socialfocus.app/): Blocks distracting elements of social media.  (e.g. feeds or shorts/reels). Works out of the box on most major social media platforms
+
+**Desktop Apps**
+
+- [Cold Turkey](https://getcoldturkey.com/): Downloadable website blocker for windows/mac. Because it is an app rather than a browser extension, it's harder to disable, but only basic features are free.
+
+**Mobile Apps**
+
+- [ScreenZen](https://screenzen.co/): Fully-featured app blocker for mobile devices
+- [one sec](https://one-sec.app/): Forces you to pause before opening apps you select
+- Firefox on Android and Safari on iOS both support extensions for their respective browser
