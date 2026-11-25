@@ -26,7 +26,7 @@ const bundleScripts = () =>
     outdir: `${OUTPUT_DIR}/assets/js`,
   });
 
-/** Inlines the @imported partials into one minified stylesheet. Site-root URLs (e.g. /images/...) are left as-is. */
+/** Inlines the @imported partials into one minified stylesheet. Site-root URLs (e.g. images/...) are left as-is. */
 const bundleStyles = () =>
   build({
     entryPoints: ["src/styles/main.css"],
@@ -66,5 +66,6 @@ export default function (eleventyConfig: any) {
     dir: { input: "src", includes: "_includes", data: "_data", output: OUTPUT_DIR },
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
+    pathPrefix: "QuitUSM-site"
   };
 }
