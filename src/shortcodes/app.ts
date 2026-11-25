@@ -1,6 +1,5 @@
 import markdownIt from "markdown-it";
 
-/** Every platform an app can link to. Keys are what articles use; labels are what readers see. */
 export const PLATFORMS = {
   chrome: { label: "Chrome", icon: "chrome" },
   firefox: { label: "Firefox", icon: "firefox" },

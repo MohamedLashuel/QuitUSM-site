@@ -56,6 +56,8 @@ export default function (eleventyConfig: any) {
     return renderApp(id, validateApp(id, this.ctx.apps?.[id]), description);
   });
   eleventyConfig.addGlobalData("year", new Date().getFullYear());
+  // Appended to asset URLs so each deploy makes browsers fetch fresh CSS/JS instead of stale cached copies.
+  eleventyConfig.addGlobalData("buildTime", Date.now());
   eleventyConfig.addFilter("readableDate", (date: Date) =>
     date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }),
   );

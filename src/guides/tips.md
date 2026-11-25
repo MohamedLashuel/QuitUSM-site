@@ -27,7 +27,7 @@ Each notification can trigger us to pick up our phones again and waste more minu
 
 ## 6. Set fixed times to check apps
 
-Instead of, for example, checking an app's messages whenever you get a notification or feel like it, **pick times during the day where you can check** - for example, 12:00 P.M., 4:00 P.M., and 8:00 P.M.. Outside of these times, don't open these apps to see what you missed. (If you miss the time, you can still check it, but not again until the next time).
+Instead of, for example, checking an app's messages whenever you get a notification or feel like it, **pick times during the day where you can check** - for example, 12:00 P.M., 4:00 P.M., and 8:00 P.M. Outside of these times, don't open these apps to see what you missed. (If you miss the time, you can still check it, but not again until the next time).
 
 ## 7. Monitor screen time
 
@@ -43,5 +43,5 @@ Social media blockers are apps that restrict access to certain websites or apps.
 
 ## 10. Replace with other activities
 
-Having a lot of down time makes it more likely you pick up your phone or computer to kill the boredom instead of sitting with it. **Plan out activities in advance to do instead of using screens**, whether that be a hobby, going to events, meeting with friends. or something simple like taking a walk.
+Having a lot of down time makes it more likely you pick up your phone or computer to kill the boredom instead of sitting with it. **Plan out activities in advance to do instead of using screens**, whether that be a hobby, going to events, meeting with friends or something simple like taking a walk.
 

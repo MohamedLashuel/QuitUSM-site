@@ -1,5 +1,6 @@
 # Website Plan
 
+THIS PLAN IS OUTDATED.
 
 ## Style
 

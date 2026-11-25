@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title %}{{ title }} | {% endif %}{{ site.name }}</title>
   {% if description %}<meta name="description" content="{{ description }}">{% endif %}
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/main.css?v={{ buildTime }}">
   <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
-  <script type="module" src="/assets/js/nav.js"></script>
-  {% for script in scripts %}<script type="module" src="/assets/js/{{ script }}.js"></script>{% endfor %}
+  <script type="module" src="/assets/js/nav.js?v={{ buildTime }}"></script>
+  {% for script in scripts %}<script type="module" src="/assets/js/{{ script }}.js?v={{ buildTime }}"></script>{% endfor %}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
