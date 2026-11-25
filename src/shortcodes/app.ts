@@ -1,4 +1,5 @@
 import markdownIt from "markdown-it";
+import { icon } from "./icon";
 
 export const PLATFORMS = {
   chrome: { label: "Chrome", icon: "chrome" },
@@ -42,8 +43,7 @@ export const validateApp = (id: string, app: Partial<App> | undefined): App => {
   return app as App;
 };
 
-const platformIcon = (name: string): string =>
-  `<span class="icon app-card__link-icon" style="--icon: url('/images/icons/platforms/${name}.svg')" aria-hidden="true"></span>`;
+const platformIcon = (name: string): string => icon(`platforms/${name}`, "app-card__link-icon");
 
 const renderLink = (appName: string) => ([platform, url]: [string, string]): string => {
   const { label, icon } = PLATFORMS[platform as Platform];

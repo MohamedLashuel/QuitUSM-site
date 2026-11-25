@@ -1,15 +1,12 @@
 import { build } from "esbuild";
 import { renderApp, validateApp } from "./src/shortcodes/app";
 import { HtmlBasePlugin } from "@11ty/eleventy";
+import { icon, PATH_PREFIX } from "./src/shortcodes/icon";
 
 type CollectionItem = { data: Record<string, unknown>; date: Date };
 
 const OUTPUT_DIR = "_site";
 const SCRIPT_ENTRIES = ["src/scripts/nav.ts", "src/scripts/blog.ts"];
-
-/** Renders a decorative SVG icon from public/images/icons, colored via CSS mask + currentColor. */
-const icon = (name: string, className = ""): string =>
-  `<span class="${["icon", className].filter(Boolean).join(" ")}" style="--icon: url('/images/icons/${name}.svg')" aria-hidden="true"></span>`;
 
 const byOrder = (a: CollectionItem, b: CollectionItem): number =>
   Number(a.data.order ?? 0) - Number(b.data.order ?? 0);
@@ -69,6 +66,6 @@ export default function (eleventyConfig: any) {
     dir: { input: "src", includes: "_includes", data: "_data", output: OUTPUT_DIR },
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
-    pathPrefix: "/QuitUSM-site/"
+    pathPrefix: PATH_PREFIX,
   };
 }
