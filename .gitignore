@@ -1,0 +1,7 @@
+node_modules/
+_site/
+book/.Rproj.user
+book/rsconnect
+book/.Rhistory
+book/Notes
+book/.positai
