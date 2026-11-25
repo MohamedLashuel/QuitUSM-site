@@ -4,9 +4,21 @@ layout: layouts/base.njk
 <article class="article container container--narrow">
   <header class="article__header">
     <h1 class="article__title">{{ title }}</h1>
-    {% if showDate %}<p class="article__meta"><time datetime="{{ page.date.toISOString() }}">{{ page.date | readableDate }}</time></p>{% endif %}
+    {% if author or showDate %}
+    <p class="article__meta">
+      {%- if author %}By <span class="article__author">{{ author }}</span>{% endif -%}
+      {%- if author and showDate %} · {% endif -%}
+      {%- if showDate %}<time datetime="{{ page.date.toISOString() }}">{{ page.date | readableDate }}</time>{% endif -%}
+    </p>
+    {% endif %}
   </header>
   <div class="prose">
     {{ content | safe }}
   </div>
+  {% if cc_license %}
+  <footer class="article__license">
+    <img class="article__license-badge" src="/images/cc_by_4.png" alt="" width="92" height="32">
+    <p>This article is licensed under <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. You may share and adapt it, provided you give appropriate credit.</p>
+  </footer>
+  {% endif %}
 </article>

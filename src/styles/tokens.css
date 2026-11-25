@@ -1,0 +1,71 @@
+/* Design tokens: colors, spacing, typography, shape */
+
+:root {
+  /* Color: all derived from the primary's hue (257). The primary is the lightest blue
+     that keeps white text at WCAG AA contrast (4.5:1). */
+  --color-primary: oklch(0.55 0.191 257);
+  --color-primary-hover: oklch(0.47 0.16 257);
+  --color-primary-dark: oklch(0.28 0.08 257);
+  --color-primary-light: oklch(0.96 0.018 257);
+  --color-neutral-light: oklch(0.96 0 0);
+  --color-on-primary: var(--color-on-dark);
+  --color-on-primary-muted: oklch(0.84 0.05 257);
+  --color-on-dark: oklch(0.98 0.008 257);
+  --color-on-dark-muted: oklch(0.8 0.04 257);
+  --color-text: oklch(0.22 0.03 257);
+  --color-text-muted: oklch(0.47 0.03 257);
+  --color-background: oklch(1 0 0);
+  --color-border: oklch(0.88 0.03 257);
+  --color-disabled: oklch(0.88 0.02 257);
+  --color-focus: var(--color-primary);
+  --color-overlay: oklch(0.2 0.05 257 / 0.6);
+  --color-shadow: oklch(0.2 0.05 257 / 0.2);
+
+  --color-green-light: oklch(0.96 0.018 152);
+  --color-green-dark: oklch(0.28 0.08 152);
+
+  /* Spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --space-192: 192px;
+  --space-256: 256px;
+  --space-384: 384px;
+  --space-512: 512px;
+  --space-768: 768px;
+
+  /* Typography */
+  --font-family: Verdana, Geneva, sans-serif;
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-size-30: 30px;
+  --font-size-36: 36px;
+  --font-size-48: 48px;
+  --font-size-60: 60px;
+  --font-size-72: 72px;
+  --line-height-body: 1.7;
+  --line-height-heading: 1.2;
+
+  /* Shape & layout */
+  --radius: 4px;
+  --container-width: 1280px;
+  --container-narrow: var(--space-768);
+  --gutter: var(--space-32);
+}
+
+@media (width < 768px) {
+  :root {
+    --gutter: var(--space-16);
+  }
+}

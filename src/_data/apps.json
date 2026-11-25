@@ -1,0 +1,11 @@
+{
+  "leechblock-ng": {
+    "name": "LeechBlock NG",
+    "icon": "/images/apps/leechblock-ng.png",
+    "links": {
+      "firefox": "https://addons.mozilla.org/en-US/firefox/addon/leechblock-ng/",
+      "chrome": "https://chromewebstore.google.com/detail/leechblock-ng/blaaajhemilngeeffpbfkdjjoefldkok"
+    },
+    "price": "Free"
+  }
+}

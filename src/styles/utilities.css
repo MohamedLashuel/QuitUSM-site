@@ -1,0 +1,62 @@
+/* Shared helpers: icons, containers, visually hidden text, skip link, page title */
+
+/* Sized by font-size (1em square) and colored by currentColor; see the `icon` shortcode. */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  font-size: var(--font-size-24);
+  background-color: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+@media (forced-colors: active) {
+  .icon {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--narrow {
+  max-width: calc(var(--container-narrow) + 2 * var(--gutter));
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-8);
+  left: var(--space-8);
+  z-index: 100;
+  padding: var(--space-8) var(--space-16);
+  background: var(--color-background);
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.page-title {
+  margin: 0 0 var(--space-32);
+  font-size: var(--font-size-48);
+}

@@ -12,9 +12,20 @@ const closeOpenMenusExceptClicked = (root: ParentNode, target: Node): void => {
   });
 };
 
+/** Closes the innermost open menu around the focused element and returns focus to that menu's toggle. */
+const closeInnermostMenu = (target: Element): void => {
+  const menu = target.closest<HTMLDetailsElement>(OPEN_MENUS);
+  if (!menu) return;
+  close(menu);
+  menu.querySelector<HTMLElement>(":scope > summary")?.focus();
+};
+
 export const initNav = (root: Document = document): void => {
   root.addEventListener("click", (event) => {
     closeOpenMenusExceptClicked(root, event.target as Node)
+  });
+  root.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeInnermostMenu(event.target as Element);
   });
   // On desktop the dropdown also opens on hover; reset click state when the pointer leaves.
   root.querySelectorAll<HTMLDetailsElement>(".nav__dropdown").forEach((dropdown) =>

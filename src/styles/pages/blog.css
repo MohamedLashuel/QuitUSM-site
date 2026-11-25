@@ -1,0 +1,110 @@
+/* Blog index */
+
+.blog {
+  padding-top: var(--space-64);
+}
+
+.search {
+  position: relative;
+  max-width: var(--space-512);
+  margin-bottom: var(--space-48);
+}
+
+.search__icon {
+  position: absolute;
+  top: 50%;
+  left: var(--space-16);
+  color: var(--color-text-muted);
+  transform: translateY(-50%);
+}
+
+.search__input {
+  width: 100%;
+  padding: var(--space-12) var(--space-16) var(--space-12) var(--space-48);
+  font: inherit;
+  color: inherit;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-32);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-neutral-light);
+}
+
+.post-card:focus-within {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.post-card__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.post-card__body {
+  padding: var(--space-24);
+}
+
+.post-card__title {
+  margin: 0 0 var(--space-8);
+  font-size: var(--font-size-20);
+}
+
+.post-card__title a {
+  text-decoration: none;
+}
+
+/* Make the whole card clickable via the title link */
+.post-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.post-card__title a:focus-visible {
+  outline: none;
+}
+
+.post-card:hover .post-card__title a {
+  text-decoration: underline;
+}
+
+.post-card__description {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.blog__empty {
+  color: var(--color-text-muted);
+}
+
+.blog__more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-48);
+}
+
+@media (width < 1024px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width < 768px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
+}

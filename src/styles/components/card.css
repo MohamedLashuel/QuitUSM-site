@@ -1,0 +1,6 @@
+/* Cards */
+
+.card {
+  background: var(--color-primary-light);
+  border-radius: var(--radius);
+}

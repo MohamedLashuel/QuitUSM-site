@@ -1,4 +1,5 @@
 import { build } from "esbuild";
+import { renderApp, validateApp } from "./src/shortcodes/app";
 
 type CollectionItem = { data: Record<string, unknown>; date: Date };
 
@@ -25,13 +26,23 @@ const bundleScripts = () =>
     outdir: `${OUTPUT_DIR}/assets/js`,
   });
 
+/** Inlines the @imported partials into one minified stylesheet. Site-root URLs (e.g. /images/...) are left as-is. */
+const bundleStyles = () =>
+  build({
+    entryPoints: ["src/styles/main.css"],
+    bundle: true,
+    minify: true,
+    external: ["/images/*"],
+    outdir: `${OUTPUT_DIR}/assets/css`,
+  });
+
 export default function (eleventyConfig: any) {
   eleventyConfig.addPassthroughCopy({ "public/images": "images" });
-  eleventyConfig.addPassthroughCopy({ "src/styles": "assets/css" });
   eleventyConfig.addPassthroughCopy({ "book/docs": "book" });
 
   eleventyConfig.addWatchTarget("src/scripts/");
-  eleventyConfig.on("eleventy.before", bundleScripts);
+  eleventyConfig.addWatchTarget("src/styles/");
+  eleventyConfig.on("eleventy.before", () => Promise.all([bundleScripts(), bundleStyles()]));
 
   eleventyConfig.addCollection("guides", (api: any) =>
     api.getFilteredByGlob("src/guides/*.md").sort(byOrder),
@@ -41,6 +52,9 @@ export default function (eleventyConfig: any) {
   );
 
   eleventyConfig.addShortcode("icon", icon);
+  eleventyConfig.addPairedShortcode("appcard", function (this: any, description: string, id: string) {
+    return renderApp(id, validateApp(id, this.ctx.apps?.[id]), description);
+  });
   eleventyConfig.addGlobalData("year", new Date().getFullYear());
   eleventyConfig.addFilter("readableDate", (date: Date) =>
     date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }),
