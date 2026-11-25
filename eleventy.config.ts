@@ -66,6 +66,6 @@ export default function (eleventyConfig: any) {
     dir: { input: "src", includes: "_includes", data: "_data", output: OUTPUT_DIR },
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
-    pathPrefix: "QuitUSM-site"
+    pathPrefix: "/QuitUSM-site/"
   };
 }
